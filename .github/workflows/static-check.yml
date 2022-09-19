@@ -1,0 +1,26 @@
+name: "static-check"
+
+on:
+  push:
+    branches:
+      - "main"
+      - "develop"
+  pull_request:
+
+jobs:
+  static-check:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: "actions/checkout@v3"
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '^1.18'
+      - name: Check unformatted sources
+        timeout-minutes: 1
+        run: |
+          gofmt -l
+      - name: Test
+        run: |
+          go test
