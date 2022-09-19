@@ -82,8 +82,7 @@ func TestFormat(t *testing.T) {
 				Expected: `| header1 | header2 |
 | ------- | ------- |
 | 1       |         |
-| 3       | 4       |
-`,
+| 3       | 4       |`,
 			},
 			{
 				Input: `|             artist name|    url|
@@ -148,7 +147,7 @@ header1 | header2 | header3 | | |
 		},
 		Runner: func(input string, expected string) (string, bool) {
 			res := Format(input)
-			ok := reflect.DeepEqual(input, expected)
+			ok := reflect.DeepEqual(res, expected)
 			return res, ok
 		},
 	})
