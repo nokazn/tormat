@@ -59,7 +59,7 @@ func parseTable(table string) (ParsedTable, error) {
 	}
 	body := result.body.rotate()
 	return ParsedTable{
-		columns: utils.Map(result.header, func(cell Cell, x int) Column {
+		columns: utils.Map(result.header, func(cell Cell, x uint) Column {
 			return Column{
 				header: cell,
 				body:   body[x],
@@ -69,12 +69,12 @@ func parseTable(table string) (ParsedTable, error) {
 }
 
 func formatTable(table ParsedTable) ParsedTable {
-	columns := utils.Map(table.columns, func(column Column, x int) Column {
+	columns := utils.Map(table.columns, func(column Column, x uint) Column {
 		size := append(Row{column.header}, column.body...).getMaxLength(MIN_DELIMITER)
 		return Column{
 			header:    column.header.padEnd(size),
-			delimiter: Cell(strings.Repeat(DELIMITER, size)),
-			body: utils.Map(column.body, func(cell Cell, y int) Cell {
+			delimiter: Cell(strings.Repeat(DELIMITER, int(size))),
+			body: utils.Map(column.body, func(cell Cell, y uint) Cell {
 				return cell.padEnd(size)
 			}),
 		}
@@ -85,16 +85,16 @@ func formatTable(table ParsedTable) ParsedTable {
 }
 
 func stringifyTable(table ParsedTable) string {
-	header := utils.Map(table.columns, func(column Column, x int) Cell {
+	header := utils.Map(table.columns, func(column Column, x uint) Cell {
 		return column.header
 	})
-	delimiter := utils.Map(table.columns, func(column Column, x int) Cell {
+	delimiter := utils.Map(table.columns, func(column Column, x uint) Cell {
 		return column.delimiter
 	})
-	body := Table(utils.Map(table.columns, func(column Column, x int) Row {
+	body := Table(utils.Map(table.columns, func(column Column, x uint) Row {
 		return column.body
 	})).rotate()
-	rows := utils.Map(append(Table{header, delimiter}, body...), func(row Row, _ int) string {
+	rows := utils.Map(append(Table{header, delimiter}, body...), func(row Row, _ uint) string {
 		return row.stringify()
 	})
 	return strings.Join(rows, NEWLINE)

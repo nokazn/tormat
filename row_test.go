@@ -10,16 +10,12 @@ import (
 func TestRowGetMaxLength(t *testing.T) {
 	type input struct {
 		row Row
-		min int
+		min uint
 	}
 
-	utils.RunTests(t, utils.TestRunner[input, int]{
+	utils.RunTests(t, utils.TestRunner[input, uint]{
 		Name: "Row.getMaxLength",
-		Cases: []utils.TestCase[input, int]{
-			{
-				Input:    input{Row{"", ""}, -1},
-				Expected: 0,
-			},
+		Cases: []utils.TestCase[input, uint]{
 			{
 				Input:    input{Row{"", ""}, 2},
 				Expected: 2,
@@ -37,7 +33,7 @@ func TestRowGetMaxLength(t *testing.T) {
 				Expected: 9,
 			},
 		},
-		Runner: func(input input, expected int) (int, bool) {
+		Runner: func(input input, expected uint) (uint, bool) {
 			res := input.row.getMaxLength(input.min)
 			ok := reflect.DeepEqual(res, expected)
 			return res, ok
@@ -47,19 +43,12 @@ func TestRowGetMaxLength(t *testing.T) {
 
 func TestRowNormalize(t *testing.T) {
 	type input struct {
-		length int
+		length uint
 		row    Row
 	}
 	utils.RunTests(t, utils.TestRunner[input, Row]{
 		Name: "Row.normalize",
 		Cases: []utils.TestCase[input, Row]{
-			{
-				Input: input{
-					length: -1,
-					row:    Row{"1", "2", "3"},
-				},
-				Expected: Row{},
-			},
 			{
 				Input: input{
 					length: 0,

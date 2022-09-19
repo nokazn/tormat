@@ -35,7 +35,7 @@ func (table Table) rotate() Table {
 /*
  * 各行の列数を揃える
  */
-func (table Table) normalize(length int) Table {
+func (table Table) normalize(length uint) Table {
 	for y, row := range table {
 		table[y] = row.normalize(length)
 	}
@@ -61,6 +61,6 @@ func (table Table) validate() (ValidationResult, error) {
 	}
 	return ValidationResult{
 		header: header,
-		body:   table[2:].normalize(columnSize),
+		body:   table[2:].normalize(uint(columnSize)),
 	}, nil
 }

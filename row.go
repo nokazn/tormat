@@ -22,7 +22,7 @@ func (row Row) trim() Row {
 /*
  * 列の長さを揃える
  */
-func (row Row) normalize(length int) Row {
+func (row Row) normalize(length uint) Row {
 	shortage := int(math.Max(float64(length), 0)) - len(row)
 	if shortage >= 0 {
 		return append(row, make(Row, shortage)...)
@@ -33,10 +33,10 @@ func (row Row) normalize(length int) Row {
 /*
  * 要素の最大の長さを求める
  */
-func (row Row) getMaxLength(min int) int {
+func (row Row) getMaxLength(min uint) uint {
 	max := min
 	for _, v := range row {
-		l := len(v)
+		l := uint(len(v))
 		if max < l {
 			max = l
 		}
@@ -48,7 +48,7 @@ func (row Row) getMaxLength(min int) int {
  * 行を文字列に戻す
  */
 func (row Row) stringify() string {
-	list := append([]string{BAR}, utils.Map(row, func(cell Cell, x int) string {
+	list := append([]string{BAR}, utils.Map(row, func(cell Cell, x uint) string {
 		return string(cell) + SPACE + BAR
 	})...)
 	return strings.Join(list, SPACE)
