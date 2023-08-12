@@ -12,7 +12,7 @@ func TestCellPadEnd(t *testing.T) {
 		length uint
 	}
 	utils.RunTests(t, utils.TestRunner[input, Cell]{
-		Name: "Cell.padEnd",
+		Fn: Cell.padEnd,
 		Cases: []utils.TestCase[input, Cell]{
 			{
 				Input:    input{Cell(""), 0},

@@ -48,6 +48,10 @@ func TestParseRow(t *testing.T) {
 				Expected: Row{},
 			},
 			{
+				Input:    " |   || | ",
+				Expected: Row{},
+			},
+			{
 				Input:    "",
 				Expected: Row{},
 			},
