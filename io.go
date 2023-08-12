@@ -1,18 +1,21 @@
 package tormat
 
-import "strings"
+import (
+	"strings"
 
+	"github.com/nokazn/tormat/utils"
+)
+
+type RawRow string
 type Input string
 
-func (input Input) toRow() Row {
-	trimmed := strings.Trim(string(input), " ")
+func (input RawRow) toRow() Row {
+	trimmed := strings.Trim(string(input), SPACE)
 	if trimmed == "" {
 		return Row{}
 	}
-	cells := strings.Split(trimmed, BAR)
-	row := make(Row, len(cells))
-	for x, v := range cells {
-		row[x] = Cell(v)
-	}
-	return row
+	return utils.Map(
+		strings.Split(trimmed, BAR),
+		func(val string, _ uint) Cell { return Cell(val) },
+	)
 }

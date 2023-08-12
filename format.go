@@ -17,17 +17,8 @@ type ParsedTable struct {
 	columns []Column
 }
 
-const (
-	BAR            = "|"
-	SPACE          = " "
-	DELIMITER      = "-"
-	NEWLINE        = "\n"
-	NEWLINE_REGEXP = "\r?\n"
-	MIN_DELIMITER  = 3
-)
-
 func parseRow(input string) Row {
-	row := Input(input).toRow()
+	row := RawRow(input).toRow()
 	l := len(row)
 	if l == 0 {
 		return Row{}
